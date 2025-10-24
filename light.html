@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIGHT - Energía Solar Renovable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Overlay oscuro sobre la imagen de fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 500%;
+      height: 500%;
+      background: linear-gradient(135deg, rgba(15, 15, 35, 0.8), rgba(26, 26, 46, 0.7), rgba(22, 33, 62, 0.8));
+      z-index: -2;
+    }
+
+    /* Logo del bombillo encima del fondo */
+    .logo-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1000px;
+      height: 1000px;
+      background: url('BOMBILLO.png') no-repeat center center;
+      background-size: contain;
+      opacity: 0.4;
+      z-index: -1;
+      animation: logoFloat 8s ease-in-out infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.3));
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 0.4;
+        filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.3));
+      }
+      25% { 
+        transform: translate(-50%, -50%) scale(1.05) rotate(2deg);
+        opacity: 0.5;
+        filter: drop-shadow(0 0 30px rgba(255, 204, 0, 0.5));
+      }
+      50% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(0deg);
+        opacity: 0.6;
+        filter: drop-shadow(0 0 40px rgba(255, 204, 0, 0.7));
+      }
+      75% { 
+        transform: translate(-50%, -50%) scale(1.05) rotate(-2deg);
+        opacity: 0.5;
+        filter: drop-shadow(0 0 30px rgba(255, 204, 0, 0.5));
+      }
+    }
+
+    /* Partículas de fondo animadas por encima */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffcc00, transparent),
+        radial-gradient(2px 2px at 40px 70px, #ff8c00, transparent),
+        radial-gradient(1px 1px at 90px 40px, #ffcc00, transparent),
+        radial-gradient(1px 1px at 130px 80px, #ff8c00, transparent),
+        radial-gradient(2px 2px at 160px 30px, #ffcc00, transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: sparkle 20s linear infinite;
+      opacity: 0.15;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-100px); }
+    }
+
+    header {
+      background: linear-gradient(135deg, #ffcc00, #ff8c00, #ffcc00);
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+      color: black;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header h1 {
+      font-size: 2em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 
+        -1px -1px 2px #000,
+         1px -1px 2px #000,
+        -1px  1px 2px #000,
+         1px  1px 2px #000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-weight: 600;
+      transition: all 0.4s ease;
+      font-size: 1.1em;
+      padding: 8px 16px;
+      border-radius: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      color: white;
+      transform: scale(1.1) translateY(-2px);
+      background: rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, #ffcc00, transparent);
+      transform: translateX(-50%);
+    }
+
+    section h2 {
+      font-size: 2.5em;
+      color: #ffcc00;
+      margin-bottom: 30px;
+      font-family: 'Roboto Condensed', sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      text-shadow:
+        -2px -2px 3px #000,
+         2px -2px 3px #000,
+        -2px  2px 3px #000,
+         2px  2px 3px #000,
+         0 0 20px #ffcc00;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: -2px -2px 3px #000, 2px -2px 3px #000, -2px 2px 3px #000, 2px 2px 3px #000, 0 0 20px #ffcc00; }
+      100% { text-shadow: -2px -2px 3px #000, 2px -2px 3px #000, -2px 2px 3px #000, 2px 2px 3px #000, 0 0 30px #ffcc00, 0 0 40px #ff8c00; }
+    }
+
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+      transform: translateX(-50%);
+      animation: underlineExpand 2s ease-in-out infinite;
+    }
+
+    @keyframes underlineExpand {
+      0%, 100% { width: 80px; }
+      50% { width: 120px; }
+    }
+
+    section p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #f0f0f0;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      backdrop-filter: blur(2px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, #ffcc00, transparent, #ff8c00, transparent);
+      animation: rotate 20s linear infinite;
+      opacity: 0.1;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hero h2 {
+      font-size: 3.2em;
+      color: #ffcc00;
+      text-shadow:
+        -3px -3px 4px #000,
+         3px -3px 4px #000,
+        -3px  3px 4px #000,
+         3px  3px 4px #000,
+         0 0 15px #ffcc00;
+      animation: heroTitle 4s ease-in-out infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes heroTitle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .hero p {
+      max-width: 700px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 1.3em;
+      border: 2px solid rgba(255, 204, 0, 0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .servicios, .tienda {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: rgba(26, 26, 26, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(255, 136, 0, 0.4);
+      padding: 25px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 204, 0, 0.2);
+      z-index: 2;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(255, 204, 0, 0.8);
+      border-color: #ffcc00;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+      filter: brightness(0.9);
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    .card h3 {
+      color: #ffcc00;
+      font-size: 1.4em;
+      margin-bottom: 8px;
+      text-shadow:
+        -1px -1px 2px #000,
+         1px -1px 2px #000,
+        -1px  1px 2px #000,
+         1px  1px 2px #000;
+    }
+
+    /* Tarjetas giratorias para Acerca de */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 350px;
+      perspective: 1000px;
+      z-index: 2;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+      cursor: pointer;
+    }
+
+    .flip-card-front {
+      background: linear-gradient(135deg, #ffcc00, #ff8c00);
+      color: black;
+    }
+
+    .flip-card-back {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      transform: rotateY(180deg);
+      border: 2px solid #ffcc00;
+    }
+
+    .flip-card-front h3 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      color: black;
+    }
+
+    .flip-card-front .icon {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      color: #1a1a2e;
+    }
+
+    .flip-card-front p {
+      font-size: 1.1em;
+      color: black;
+      text-shadow: none;
+    }
+
+    .flip-card-back p {
+      font-size: 1em;
+      line-height: 1.6;
+      text-align: justify;
+      color: white;
+    }
+
+    footer {
+      background: #1a1a1a;
+      color: #ffcc00;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      font-size: 0.95em;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    .redes {
+      display: flex;
+      gap: 20px;
+    }
+
+    .redes a {
+      color: #ffcc00;
+      font-size: 1.8em;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .redes a:hover {
+      color: #ff8c00;
+      transform: scale(1.2);
+    }
+
+    /* Tarjetas de contacto */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      background: rgba(26, 26, 26, 0.9);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      border: 2px solid rgba(255, 204, 0, 0.3);
+      transition: all 0.4s ease;
+      z-index: 2;
+      position: relative;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      border-color: #ffcc00;
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
+    }
+
+    .contact-card .icon {
+      font-size: 3em;
+      color: #ffcc00;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover .icon {
+      transform: scale(1.1);
+      color: #ff8c00;
+    }
+
+    .contact-card h3 {
+      color: #ffcc00;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .contact-card p {
+      color: #f0f0f0;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .contact-info {
+      background: rgba(255, 204, 0, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      border: 1px solid rgba(255, 204, 0, 0.2);
+    }
+
+    .contact-info span {
+      color: #ffcc00;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .contact-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 12px;
+      margin: 15px auto;
+      object-fit: cover;
+      border: 2px solid rgba(255, 204, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .contact-image:hover {
+      border-color: #ffcc00;
+      transform: scale(1.05);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      width: 65px;
+      height: 65px;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 32px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 1001;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+      50% { box-shadow: 0 4px 25px rgba(37, 211, 102, 0.8); }
+      100% { box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    }
+
+    .whatsapp-float i {
+      margin-top: 16px;
+    }
+  </style>
+  <!-- Iconos de redes -->
+  <script src="https://kit.fontawesome.com/2b1a4db3b1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Logo del bombillo superpuesto -->
+  <div class="logo-overlay"></div>
+
+  <header>
+    <h1>LIGHT ⚡</h1>
+    <nav>
+      <ul>
+        <li><a href="#energia">INICIO</a></li>
+
+        <li><a href="#productos">PRODUCTOS</a></li>
+        <li><a href="#nosotros">NOSOTROS</a></li>
+        <li><a href="#contacto">CONTACTOS</a></li>
+      </ul>
+    </nav>
+  </header>
+ 
+
+  <!-- Sección principal -->
+  <section id="energia" class="hero">
+    <h2>ENERGÍA Y NATURALEZA ⚡🌱</h2>
+    <p>Descubre nuestros productos solares con paneles renovables: ecológicos, modernos y eficientes. Ahorra energía mientras cuidas el planeta y mejoras la calidad de vida en zonas rurales.</p>
+  </section>
+
+
+
+  <!-- Productos -->
+  <section id="productos">
+    <h2>Productos 💡</h2>
+    <div class="tienda">
+      <div class="card">
+        <img src="campamento.jpeg" alt="Bombillo solar">
+        <h3>Bombillo Solar Campamento</h3>
+        <p><strong>$35.000 COP</strong></p>
+        <p>Ideal para camping y actividades al aire libre</p>
+      </div>
+      <div class="card">
+        <img src="lampara.jpeg" alt="Panel solar">
+        <h3>Lámpara con Panel Solar</h3>
+        <p><strong>$45.000 COP</strong></p>
+        <p>Perfecta para iluminación doméstica</p>
+      </div>
+      <div class="card">
+        <img src="led.jpeg" alt="Kit ecológico">
+        <h3>Lampara Led</h3>
+        <p><strong>$135.000 COP</strong></p>
+        <p>Ideal para hogares rurales</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nosotros -->
+  <section id="nosotros">
+    <h2>Nosotros 🏢</h2>
+    <p style="margin-bottom: 40px; font-size: 1.2em;">Somos una empresa comprometida con brindar confianza a nuestros clientes, especialmente en zonas rurales, para su comodidad y felicidad. Nuestro objetivo es crear un lugar mejor con el medio ambiente, donde la felicidad de nuestros clientes es nuestra prioridad en Fusagasugá y sus alrededores.</p>
+    
+    <div class="info-cards">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="icon">🎯</div>
+            <h3>MISIÓN</h3>
+            <p>Conoce nuestra razón de ser</p>
+          </div>
+          <div class="flip-card-back">
+            <p>Promover soluciones de iluminación innovadoras, eficientes y sostenibles, mediante el uso de tecnologías de energía renovable, que contribuyan a la reducción del impacto ambiental, el ahorro energético y el acceso a energía limpia para comunidades en todo el mundo. Nos comprometemos a ofrecer productos accesibles, de alta calidad y con un enfoque en la educación y sensibilización ambiental.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="icon">🔮</div>
+            <h3>VISIÓN</h3>
+            <p>Descubre hacia dónde vamos</p>
+          </div>
+          <div class="flip-card-back">
+            <p>Promover y adaptar tecnología de iluminación basada en energía renovable, creando un mundo más verde y sostenible, impulsando fuentes de energía limpia, eficiente y accesibles para todos. Con el tiempo podremos aumentar el espacio para paneles solares y así lograr un gran incremento para tener un ambiente limpio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="icon">🚀</div>
+            <h3>OBJETIVO</h3>
+            <p>Conoce nuestras metas</p>
+          </div>
+          <div class="flip-card-back">
+            <p>Proponer e incentivar el uso de bombillos con energía renovable, como una alternativa asequible, económica y sostenible para que las personas que viven en áreas rurales consigan una mejor calidad de vida, facilitando su desarrollo social y económico y reduciendo el impacto negativo que sobre el medio ambiente ocasionan las fuentes de energía tradicionales.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Redes de contacto -->
+  <section id="contacto">
+    <h2>Contáctanos 📱</h2>
+    <p style="font-size: 1.2em; margin-bottom: 40px;">Conecta con nosotros a través de nuestros canales de comunicación:</p>
+    
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="icon">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <h3>Instagram</h3>
+        <img src="inta.jpeg" alt="Instagram" class="contact-image">
+        <p>Síguenos para ver nuestros productos y novedades</p>
+        <div class="contact-info">
+          <span>@Light._2_</span>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="icon">
+          <i class="fab fa-facebook"></i>
+        </div>
+        <h3>Facebook</h3>
+        <p>Únete a nuestra comunidad y mantente informado</p>
+        <div class="contact-info">
+          <span>Lights Empresa</span>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3>Correo Electrónico</h3>
+        <p>Escríbenos para consultas y cotizaciones</p>
+        <div class="contact-info">
+          <span>Light12sas@gmail.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 LIGHT - Energía Solar Renovable — Energía que ilumina el futuro</p>
+    <div class="redes">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/573001112233?text=Hola!%20Quiero%20más%20información%20sobre%20los%20productos%20solares" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+</body>
+</html>
